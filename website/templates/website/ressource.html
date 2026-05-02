@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources - FAP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'website/style.css' %}">
+</head>
+<body>
+    {% include 'website/header.html' %}
+
+    <main>
+        <div class="max-w-[1060px] mx-auto px-5 pb-20">
+            <h1 class="!mb-8">Resources</h1>
+            <p class="mb-12">Tools, guides, and information to help fight pornography addiction</p>
+
+            <!-- Section 01: Educational Resources -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">01</span>
+                    <h2 class="text-xl font-semibold">Educational Resources</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Understanding Addiction</h3>
+                            <span class="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded">Guide</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Scientific research and insights into how pornography affects the brain and behavior patterns.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Psychology</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Neuroscience</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Recovery Strategies</h3>
+                            <span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">Practical</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Evidence-based methods and techniques for breaking free from pornography addiction.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Step-by-step</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Actionable</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Support Networks</h3>
+                            <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Community</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Connect with support groups, counselors, and communities dedicated to recovery.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Anonymous</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Safe</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Impact Studies</h3>
+                            <span class="text-xs px-2 py-1 bg-amber-500/20 text-amber-400 rounded">Research</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Data and statistics on the societal impact of pornography and addiction recovery rates.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Data-driven</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Peer-reviewed</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 02: Technical Tools -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">02</span>
+                    <h2 class="text-xl font-semibold">Technical Tools</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">🛡️</div>
+                        <h3 class="text-sm font-semibold mb-2">Content Filters</h3>
+                        <p class="text-xs opacity-70">Browser extensions and DNS-level filtering solutions</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">📊</div>
+                        <h3 class="text-sm font-semibold mb-2">Analytics Dashboard</h3>
+                        <p class="text-xs opacity-70">Track progress and monitor recovery milestones</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">🔔</div>
+                        <h3 class="text-sm font-semibold mb-2">Accountability Apps</h3>
+                        <p class="text-xs opacity-70">Mobile and desktop monitoring applications</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">🔒</div>
+                        <h3 class="text-sm font-semibold mb-2">Parental Controls</h3>
+                        <p class="text-xs opacity-70">Protect children with advanced filtering technology</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">📱</div>
+                        <h3 class="text-sm font-semibold mb-2">Device Management</h3>
+                        <p class="text-xs opacity-70">Cross-platform synchronization and control</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <div class="text-2xl mb-2">⏰</div>
+                        <h3 class="text-sm font-semibold mb-2">Screen Time Limits</h3>
+                        <p class="text-xs opacity-70">Set healthy boundaries for device usage</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 03: Reading Materials -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">03</span>
+                    <h2 class="text-xl font-semibold">Recommended Reading</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold mb-3 opacity-60">Books & Publications</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">Your Brain on Porn</div>
+                                    <div class="text-xs opacity-60 mt-1">Gary Wilson - Understanding internet pornography addiction</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">The Porn Trap</div>
+                                    <div class="text-xs opacity-60 mt-1">Wendy Maltz - Essential guide to overcoming problems caused by pornography</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">Wired for Intimacy</div>
+                                    <div class="text-xs opacity-60 mt-1">William Struthers - How pornography hijacks the male brain</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-semibold mb-3 opacity-60">Online Articles & Research</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">The Science Behind Addiction</div>
+                                    <div class="text-xs opacity-60 mt-1">Peer-reviewed studies on neuroplasticity and recovery</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">Recovery Success Stories</div>
+                                    <div class="text-xs opacity-60 mt-1">Real testimonials from individuals who overcame addiction</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <div>
+                                    <div class="text-sm font-semibold">Digital Wellness Guidelines</div>
+                                    <div class="text-xs opacity-60 mt-1">Best practices for maintaining healthy digital habits</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 04: Help & Support -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">04</span>
+                    <h2 class="text-xl font-semibold">Get Help Now</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">💬</div>
+                        <h3 class="text-sm font-semibold mb-2">24/7 Helpline</h3>
+                        <p class="text-xs opacity-70 mb-3">Confidential support available anytime you need it</p>
+                        <a href="#" class="text-xs text-blue-400 hover:underline">Contact Support →</a>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">👥</div>
+                        <h3 class="text-sm font-semibold mb-2">Join a Support Group</h3>
+                        <p class="text-xs opacity-70 mb-3">Connect with others on the same journey to recovery</p>
+                        <a href="#" class="text-xs text-blue-400 hover:underline">Find Groups →</a>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">🎓</div>
+                        <h3 class="text-sm font-semibold mb-2">Professional Counseling</h3>
+                        <p class="text-xs opacity-70 mb-3">Licensed therapists specializing in addiction recovery</p>
+                        <a href="#" class="text-xs text-blue-400 hover:underline">Book Session →</a>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">📚</div>
+                        <h3 class="text-sm font-semibold mb-2">Recovery Programs</h3>
+                        <p class="text-xs opacity-70 mb-3">Structured 12-step and alternative recovery programs</p>
+                        <a href="#" class="text-xs text-blue-400 hover:underline">Explore Programs →</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'website/footer.html' %}
+
+    <script src="{% static 'website/script.js' %}"></script>
+</body>
+</html>

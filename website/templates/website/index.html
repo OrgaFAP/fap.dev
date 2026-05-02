@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation - ccleaks Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'website/style.css' %}">
+</head>
+<body>
+    {% include 'website/header.html' %}
+
+    <main>
+        <div class="max-w-[1060px] mx-auto px-5 pb-20">
+            <h1 class="!mb-8">Welcome to fap.dev</h1>
+            <p class="mb-12">Use programmation to understand and fight the pornography pandemic</p>
+
+            <!-- Section 01: Experimental Features -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">01</span>
+                    <h2 class="text-xl font-semibold">Experimental Features</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Neural Code Completion</h3>
+                            <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Beta</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">AI-powered code suggestions that learn from your coding patterns and repository history.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">ML-Powered</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Real-time</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Quantum State Persistence</h3>
+                            <span class="text-xs px-2 py-1 bg-amber-500/20 text-amber-400 rounded">Experimental</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Save and restore your entire development environment including memory state and running processes.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Snapshot</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Instant</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Distributed Debug Mode</h3>
+                            <span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">Preview</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Debug across multiple machines simultaneously with synchronized breakpoints and variable inspection.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Multi-node</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Sync</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-[var(--separator)] rounded-lg p-6 hover:border-[var(--foreground)] transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-semibold">Time-Travel Testing</h3>
+                            <span class="text-xs px-2 py-1 bg-red-500/20 text-red-400 rounded">Unstable</span>
+                        </div>
+                        <p class="text-sm opacity-70 mb-4">Step backward and forward through test execution to identify the exact moment bugs are introduced.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Temporal</span>
+                            <span class="text-xs px-2 py-1 bg-[var(--hover-bg)] rounded">Reversible</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 02: Hidden Commands -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">02</span>
+                    <h2 class="text-xl font-semibold">Hidden Slash Commands</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/matrix</code>
+                        <p class="text-xs opacity-70 mt-2">Enter the matrix visualization mode</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/ghost</code>
+                        <p class="text-xs opacity-70 mt-2">Toggle invisible mode for pair programming</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/turbocharged</code>
+                        <p class="text-xs opacity-70 mt-2">Enable high-performance compilation mode</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/zen</code>
+                        <p class="text-xs opacity-70 mt-2">Minimal distraction-free coding interface</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/prophet</code>
+                        <p class="text-xs opacity-70 mt-2">Predict potential bugs before they occur</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-4">
+                        <code class="text-sm font-mono text-purple-400">/warp</code>
+                        <p class="text-xs opacity-70 mt-2">Jump to any file instantly using fuzzy search</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 03: Secret Environment Variables -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">03</span>
+                    <h2 class="text-xl font-semibold">Secret Environment Variables</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold mb-3 opacity-60">Debug & Development</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_DEBUG_VERBOSE</code>
+                                <span class="text-xs opacity-60">Enable ultra-detailed logging</span>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_TRACE_MEMORY</code>
+                                <span class="text-xs opacity-60">Track memory allocation patterns</span>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_PROFILER_MODE</code>
+                                <span class="text-xs opacity-60">Continuous performance profiling</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-semibold mb-3 opacity-60">Runtime & Performance</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_TURBO_COMPILE</code>
+                                <span class="text-xs opacity-60">Experimental fast compilation engine</span>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_LAZY_LOAD_ALL</code>
+                                <span class="text-xs opacity-60">Aggressive lazy loading strategy</span>
+                            </div>
+                            <div class="flex items-start justify-between py-2 border-b border-[var(--separator)]">
+                                <code class="text-sm font-mono">FAP_CACHE_INFINITE</code>
+                                <span class="text-xs opacity-60">Never invalidate build cache</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 04: Fun Facts -->
+            <section class="mb-16">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <span class="font-mono text-sm opacity-60">04</span>
+                    <h2 class="text-xl font-semibold">Fun Facts & Easter Eggs</h2>
+                </div>
+                <hr class="mb-8 opacity-20">
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">🚀</div>
+                        <h3 class="text-sm font-semibold mb-2">Launch Speed</h3>
+                        <p class="text-xs opacity-70">Starts in under 47ms on modern hardware with SSD storage</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h3 class="text-sm font-semibold mb-2">Code Accuracy</h3>
+                        <p class="text-xs opacity-70">AI suggestions have 94.7% acceptance rate in production</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">🔒</div>
+                        <h3 class="text-sm font-semibold mb-2">Security First</h3>
+                        <p class="text-xs opacity-70">All code is sandboxed and encrypted before execution</p>
+                    </div>
+                    <div class="border border-[var(--separator)] rounded-lg p-5">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h3 class="text-sm font-semibold mb-2">Power Mode</h3>
+                        <p class="text-xs opacity-70">Type "konami" followed by Enter to unlock secret animations</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'website/footer.html' %}
+
+    <script src="{% static 'website/script.js' %}"></script>
+</body>
+</html>

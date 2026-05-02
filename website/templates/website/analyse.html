@@ -1,0 +1,555 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse - FAP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'website/style.css' %}">
+</head>
+<body>
+    {% include 'website/header.html' %}
+
+    <main>
+        <div class="max-w-[1060px] mx-auto px-5 py-20">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">Data Analyse</h1>
+                <p class="text-lg opacity-70">Browse collected data by date</p>
+            </div>
+
+            <!-- Recent Data Section -->
+            <div class="mb-16">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold mb-2">Recent Data</h2>
+                    <p class="text-sm opacity-70">Data from the last 5 days</p>
+                </div>
+
+                <!-- Day Tabs -->
+                <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+                    {% for day in days %}
+                    <button onclick="showDay({{ forloop.counter0 }}, '{{ day|date:'Y-m-d' }}')" class="day-tab {% if forloop.first %}active{% endif %}" id="dayTab{{ forloop.counter0 }}">
+                        {{ day|date:"F j, Y" }}
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <!-- Day Content Panels (one per day, populated by JS) -->
+                {% for day in days %}
+                <div class="day-panel {% if not forloop.first %}hidden{% endif %}" id="dayPanel{{ forloop.counter0 }}"></div>
+                {% endfor %}
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-[var(--separator)] my-16"></div>
+
+            <!-- Date Selector -->
+            <div class="mb-12">
+                <div class="border border-[var(--separator)] rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Select Date</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <!-- Year Selector -->
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block text-sm font-semibold mb-2">Year</label>
+                            <select id="yearSelect" class="w-full px-4 py-2 border border-[var(--separator)] rounded bg-[var(--background)] text-[var(--foreground)] font-mono text-sm">
+                                <option value="">Select Year</option>
+                                <option value="2026">2026</option>
+                            </select>
+                        </div>
+
+                        <!-- Month Selector -->
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block text-sm font-semibold mb-2">Month</label>
+                            <select id="monthSelect" class="w-full px-4 py-2 border border-[var(--separator)] rounded bg-[var(--background)] text-[var(--foreground)] font-mono text-sm">
+                                <option value="">Select Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+
+                        <!-- Day Selector -->
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block text-sm font-semibold mb-2">Day</label>
+                            <select id="daySelect" class="w-full px-4 py-2 border border-[var(--separator)] rounded bg-[var(--background)] text-[var(--foreground)] font-mono text-sm">
+                                <option value="">Select Day</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                        </div>
+
+                        <!-- Load Button -->
+                        <div class="flex items-end">
+                            <button onclick="loadData()" class="px-6 py-2 bg-[var(--foreground)] text-[var(--background)] rounded font-semibold text-sm hover:opacity-80 transition-opacity">
+                                Load Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Selected Date Display -->
+                    <div id="selectedDate" class="mt-4 text-sm opacity-70 font-mono hidden">
+                        Selected: <span id="dateDisplay" class="font-semibold"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Date Result Panel -->
+            <div id="customDatePanel" class="hidden mb-12"></div>
+
+            <!-- Divider -->
+            <div class="border-t border-[var(--separator)] my-16"></div>
+
+            <!-- Date Range Selector -->
+            <div class="mb-12">
+                <div class="border border-[var(--separator)] rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Date Range</h2>
+
+                    <!-- Date inputs -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="flex-1 min-w-[180px]">
+                            <label class="block text-sm font-semibold mb-2">From</label>
+                            <input type="date" id="rangeStart" class="range-date-input w-full px-4 py-2 border border-[var(--separator)] rounded bg-[var(--background)] text-[var(--foreground)] font-mono text-sm">
+                        </div>
+                        <div class="flex-1 min-w-[180px]">
+                            <label class="block text-sm font-semibold mb-2">To</label>
+                            <input type="date" id="rangeEnd" class="range-date-input w-full px-4 py-2 border border-[var(--separator)] rounded bg-[var(--background)] text-[var(--foreground)] font-mono text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Source checkboxes -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold mb-3">Sources</label>
+                        <div class="flex flex-wrap gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" id="srcPornhub" value="Pornhub2026" class="source-checkbox" checked>
+                                <span class="text-sm font-mono">Pornhub</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" id="srcXhamster" value="Xhamster2026" class="source-checkbox" checked>
+                                <span class="text-sm font-mono">Xhamster</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" id="srcXvideos" value="Xvideos2026" class="source-checkbox" checked>
+                                <span class="text-sm font-mono">Xvideos</span>
+                            </label>
+                        </div>
+                        <p id="sourceError" class="hidden mt-2 text-xs text-red-400 font-mono">At least one source must be selected.</p>
+                    </div>
+
+                    <!-- Load button + status -->
+                    <div class="flex items-center gap-4">
+                        <button onclick="loadRangeData()" class="px-6 py-2 bg-[var(--foreground)] text-[var(--background)] rounded font-semibold text-sm hover:opacity-80 transition-opacity">
+                            Load Data
+                        </button>
+                        <span id="rangeStatus" class="hidden text-sm opacity-70 font-mono"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Range Result Panel -->
+            <div id="rangeDatePanel" class="hidden mb-12"></div>
+
+        </div>
+    </main>
+
+    <style>
+        select {
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--foreground);
+        }
+
+        .data-item-link {
+            display: block;
+            text-decoration: none;
+            color: var(--foreground);
+        }
+
+        .data-item-link:hover {
+            color: var(--foreground);
+        }
+
+        /* Day Tabs */
+        .day-tab {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--separator);
+            border-radius: 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-jetbrains-mono);
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .day-tab:hover {
+            background: var(--hover-bg);
+            color: var(--foreground);
+            border-color: var(--foreground);
+        }
+
+        .day-tab.active {
+            background: var(--foreground);
+            color: var(--background);
+            border-color: var(--foreground);
+        }
+
+        .range-date-input:focus {
+            outline: none;
+            border-color: var(--foreground);
+        }
+
+        .range-date-input::-webkit-calendar-picker-indicator {
+            filter: invert(var(--calendar-invert, 0));
+            cursor: pointer;
+        }
+
+        .source-checkbox {
+            width: 1rem;
+            height: 1rem;
+            cursor: pointer;
+            accent-color: var(--foreground);
+        }
+    </style>
+
+    <script src="{% static 'website/script.js' %}"></script>
+    <script>
+        const DAY_COUNT = {{ days|length }};
+        const panelLoaded = {};
+
+        // ── Pagination ────────────────────────────────────────────────────────
+        const ITEMS_PER_PAGE = 25;
+        const paginationData = {}; // stateKey → { entries, maxCount, currentPage }
+        const dbPageData     = {}; // panelId  → { sections: [{html, stateKey, dbName}], current: 0 }
+
+        function renderSectionPage(stateKey, page) {
+            const state = paginationData[stateKey];
+            if (!state) return;
+            state.currentPage = page;
+            const { entries, maxCount } = state;
+            const totalPages = Math.ceil(entries.length / ITEMS_PER_PAGE);
+            const sliceStart = page * ITEMS_PER_PAGE;
+            const pageEntries = entries.slice(sliceStart, sliceStart + ITEMS_PER_PAGE);
+
+            const rowsHTML = pageEntries.map(([tag, count], i) => {
+                const rank = sliceStart + i + 1;
+                const pct  = Math.round((count / maxCount) * 100);
+                return `
+                    <div class="flex items-center gap-4 py-2.5 border-b border-[var(--separator)] last:border-0">
+                        <span class="w-6 text-xs font-mono opacity-40 text-right shrink-0">${rank}</span>
+                        <span class="w-40 text-sm font-mono shrink-0 truncate">${tag}</span>
+                        <div class="flex-1 h-1.5 bg-[var(--separator)] rounded-full overflow-hidden">
+                            <div class="h-full bg-[var(--foreground)] rounded-full" style="width:${pct}%"></div>
+                        </div>
+                        <span class="w-8 text-xs font-mono opacity-60 text-right shrink-0">${count}</span>
+                    </div>`;
+            }).join('');
+
+            document.getElementById(`rows_${stateKey}`).innerHTML = rowsHTML;
+
+            const pagerEl = document.getElementById(`pager_${stateKey}`);
+            if (totalPages > 1) {
+                const prevOff = page === 0;
+                const nextOff = page >= totalPages - 1;
+                pagerEl.innerHTML = `
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-[var(--separator)]">
+                        <button onclick="renderSectionPage('${stateKey}', ${page - 1})"
+                            class="px-3 py-1 text-xs font-mono border border-[var(--separator)] rounded transition-colors ${prevOff ? 'opacity-30 pointer-events-none' : 'hover:border-[var(--foreground)]'}"
+                            ${prevOff ? 'disabled' : ''}>← Prev</button>
+                        <span class="text-xs font-mono opacity-50">
+                            Page ${page + 1} / ${totalPages} &nbsp;·&nbsp; ${entries.length} items
+                        </span>
+                        <button onclick="renderSectionPage('${stateKey}', ${page + 1})"
+                            class="px-3 py-1 text-xs font-mono border border-[var(--separator)] rounded transition-colors ${nextOff ? 'opacity-30 pointer-events-none' : 'hover:border-[var(--foreground)]'}"
+                            ${nextOff ? 'disabled' : ''}>Next →</button>
+                    </div>`;
+            } else {
+                pagerEl.innerHTML = '';
+            }
+        }
+
+        function switchDbPage(panelId, dbIndex) {
+            const state = dbPageData[panelId];
+            if (!state) return;
+            state.current = dbIndex;
+
+            // Swap content
+            const contentEl = document.getElementById(`dbContent_${panelId}`);
+            contentEl.innerHTML = state.sections[dbIndex].html;
+            const sk = state.sections[dbIndex].stateKey;
+            if (sk) renderSectionPage(sk, 0);
+
+            // Update button styles
+            state.sections.forEach((_, i) => {
+                const btn = document.getElementById(`dbBtn_${panelId}_${i}`);
+                if (!btn) return;
+                btn.classList.toggle('active', i === dbIndex);
+            });
+        }
+
+        // Returns { html, stateKey } — stateKey is null when entries is empty.
+        function buildSection(dbName, tags, panelId, emptyMsg) {
+            const entries = Object.entries(tags);
+            const countBadge = `<span class="px-2 py-0.5 border border-[var(--separator)] rounded-full text-xs font-mono opacity-50">${entries.length} tag${entries.length !== 1 ? 's' : ''}</span>`;
+
+            if (entries.length === 0) {
+                return { html: `
+                    <div class="border border-[var(--separator)] rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold font-mono">${dbName}</h3>
+                            ${countBadge}
+                        </div>
+                        <p class="font-mono text-sm opacity-50 text-center py-8">${emptyMsg}</p>
+                    </div>`, stateKey: null };
+            }
+
+            const maxCount = Math.max(...entries.map(([, v]) => v));
+            const stateKey = `${panelId}_${dbName.replace(/\W/g, '_')}`;
+            paginationData[stateKey] = { entries, maxCount, currentPage: 0 };
+
+            return { html: `
+                <div class="border border-[var(--separator)] rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold font-mono">${dbName}</h3>
+                        ${countBadge}
+                    </div>
+                    <div id="rows_${stateKey}"></div>
+                    <div id="pager_${stateKey}"></div>
+                </div>`, stateKey };
+        }
+
+        // ── Tab helpers ───────────────────────────────────────────────────────
+        function activateTab(index) {
+            for (let i = 0; i < DAY_COUNT; i++) {
+                document.getElementById('dayTab' + i).classList.toggle('active', i === index);
+                document.getElementById('dayPanel' + i).classList.toggle('hidden', i !== index);
+            }
+        }
+
+        // ── renderPanel (used by Recent Data + single-date selector) ──────────
+        function renderPanel(panel, isoDate, displayLabel) {
+            panel.innerHTML = `
+                <div class="border border-[var(--separator)] rounded-lg p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 border-2 border-[var(--foreground)] border-t-transparent rounded-full animate-spin"></div>
+                        <span class="font-mono text-sm opacity-50">Querying database…</span>
+                    </div>
+                </div>`;
+
+            fetch(`/api/data/by-date/?date=${isoDate}`)
+                .then(r => r.json())
+                .then(data => {
+                    const databases = data.databases || {};
+                    const dbNames   = Object.keys(databases);
+                    const panelId   = panel.id || `p_${Date.now()}`;
+
+                    const allEmpty = dbNames.every(n => Object.keys(databases[n]).length === 0);
+                    if (allEmpty) {
+                        panel.innerHTML = `
+                            <div class="border border-[var(--separator)] rounded-lg p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold font-mono">${displayLabel}</h3>
+                                </div>
+                                <p class="font-mono text-sm opacity-50 text-center py-8">No entries found for this date.</p>
+                            </div>`;
+                        return;
+                    }
+
+                    const sections = dbNames.map(n => buildSection(n, databases[n], panelId, 'No entries found for this date.'));
+                    dbPageData[panelId] = { sections, current: 0 };
+
+                    const btnHTML = dbNames.map((name, i) => `
+                        <button id="dbBtn_${panelId}_${i}"
+                            onclick="switchDbPage('${panelId}', ${i})"
+                            class="day-tab ${i === 0 ? 'active' : ''}">
+                            ${i + 1} · ${name.replace('2026', '')}
+                        </button>`).join('');
+
+                    panel.innerHTML = `
+                        <div>
+                            <h3 class="text-lg font-semibold font-mono mb-4">${displayLabel}</h3>
+                            <div class="flex gap-2 mb-6 overflow-x-auto pb-1">${btnHTML}</div>
+                            <div id="dbContent_${panelId}"></div>
+                        </div>`;
+
+                    switchDbPage(panelId, 0);
+                })
+                .catch(() => {
+                    panel.innerHTML = `
+                        <div class="border border-red-500/20 bg-red-500/5 rounded-lg p-8 text-center">
+                            <p class="font-mono text-sm text-red-400">Failed to load data. Check the server logs.</p>
+                        </div>`;
+                });
+        }
+
+        function showDay(index, isoDate) {
+            activateTab(index);
+            if (panelLoaded[index]) return;
+            panelLoaded[index] = true;
+            const label = document.getElementById('dayTab' + index).textContent.trim();
+            renderPanel(document.getElementById('dayPanel' + index), isoDate, label);
+        }
+
+        // ── Single-date selector ──────────────────────────────────────────────
+        function loadData() {
+            const year  = document.getElementById('yearSelect').value;
+            const month = document.getElementById('monthSelect').value;
+            const day   = document.getElementById('daySelect').value;
+
+            if (!year || !month || !day) {
+                alert('Please select a complete date (Year, Month, and Day)');
+                return;
+            }
+
+            const isoDate = `${year}-${month}-${day.padStart(2, '0')}`;
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                                'July', 'August', 'September', 'October', 'November', 'December'];
+            const dateString = `${parseInt(day)} ${monthNames[parseInt(month) - 1]} ${year}`;
+
+            document.getElementById('dateDisplay').textContent = dateString;
+            document.getElementById('selectedDate').classList.remove('hidden');
+
+            const panel = document.getElementById('customDatePanel');
+            panel.classList.remove('hidden');
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            renderPanel(panel, isoDate, dateString);
+        }
+
+        // ── Range selector ────────────────────────────────────────────────────
+        function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+            return match ? decodeURIComponent(match[1]) : '';
+        }
+
+        document.querySelectorAll('.source-checkbox').forEach(cb => {
+            cb.addEventListener('change', function () {
+                const checked  = document.querySelectorAll('.source-checkbox:checked');
+                const errorEl  = document.getElementById('sourceError');
+                if (checked.length === 0) {
+                    this.checked = true;
+                    errorEl.classList.remove('hidden');
+                    setTimeout(() => errorEl.classList.add('hidden'), 2500);
+                }
+            });
+        });
+
+        function loadRangeData() {
+            const start   = document.getElementById('rangeStart').value;
+            const end     = document.getElementById('rangeEnd').value;
+            const sources = Array.from(document.querySelectorAll('.source-checkbox:checked')).map(c => c.value);
+
+            if (!start || !end) {
+                alert('Please select both a start date and an end date.');
+                return;
+            }
+            if (start > end) {
+                alert('Start date must be before or equal to the end date.');
+                return;
+            }
+
+            const statusEl = document.getElementById('rangeStatus');
+            statusEl.textContent = `${start} → ${end}  ·  ${sources.map(s => s.replace('2026', '')).join(', ')}`;
+            statusEl.classList.remove('hidden');
+
+            const panel = document.getElementById('rangeDatePanel');
+            panel.classList.remove('hidden');
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            panel.innerHTML = `
+                <div class="border border-[var(--separator)] rounded-lg p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 border-2 border-[var(--foreground)] border-t-transparent rounded-full animate-spin"></div>
+                        <span class="font-mono text-sm opacity-50">Querying database…</span>
+                    </div>
+                </div>`;
+
+            const payload = { date: [start, end], sources };
+            fetch('/api/data/range/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+                body: JSON.stringify(payload)
+            })
+                .then(r => r.json())
+                .then(data => {
+                    const databases = data.databases || {};
+                    const dbNames   = Object.keys(databases);
+                    const panelId   = 'rangeDatePanel';
+
+                    const allEmpty = dbNames.every(n => Object.keys(databases[n]).length === 0);
+                    if (allEmpty) {
+                        panel.innerHTML = `
+                            <div class="border border-[var(--separator)] rounded-lg p-6">
+                                <p class="font-mono text-sm opacity-50 text-center py-8">No entries found for this range.</p>
+                            </div>`;
+                        return;
+                    }
+
+                    const sections = dbNames.map(n => buildSection(n, databases[n], panelId, 'No entries found for this range.'));
+                    panel.innerHTML = `
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold font-mono mb-6">${start} → ${end}</h3>
+                            <div class="space-y-6">${sections.map(s => s.html).join('')}</div>
+                        </div>`;
+                    sections.forEach(s => { if (s.stateKey) renderSectionPage(s.stateKey, 0); });
+                })
+                .catch(() => {
+                    panel.innerHTML = `
+                        <div class="border border-red-500/20 bg-red-500/5 rounded-lg p-8 text-center">
+                            <p class="font-mono text-sm text-red-400">Failed to load data. Check the server logs.</p>
+                        </div>`;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showDay(0, '{{ days.0|date:"Y-m-d" }}');
+        });
+    </script>
+
+    {% include 'website/footer.html' %}
+</body>
+</html>

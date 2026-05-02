@@ -1,0 +1,12 @@
+[project]
+name = "fap"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.0.4",
+    "fastapi[standard]>=0.136.1",
+    "mariadb>=1.1.14",
+    "python-decouple>=3.8",
+]
