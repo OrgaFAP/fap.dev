@@ -34,6 +34,10 @@ def thoughts(request):
     return render(request, "website/thoughts.html")
 
 
+def why(request):
+    return render(request, "website/why.html")
+
+
 ALL_DATABASES: list = ["Pornhub", "Xvideos", "Xhamster"]
 
 
