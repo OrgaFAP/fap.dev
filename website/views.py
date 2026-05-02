@@ -30,6 +30,10 @@ def ressource(request):
     return render(request, "website/ressource.html")
 
 
+def thoughts(request):
+    return render(request, "website/thoughts.html")
+
+
 ALL_DATABASES: list = ["Pornhub", "Xvideos", "Xhamster"]
 
 

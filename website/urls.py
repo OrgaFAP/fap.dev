@@ -6,4 +6,5 @@ urlpatterns = [
     path("donate/", views.donate, name="donate"),
     path("architecture/", views.analyse, name="analyse"),
     path("ressource/", views.ressource, name="ressource"),
+    path("thoughts/", views.thoughts, name="thoughts"),
 ]
