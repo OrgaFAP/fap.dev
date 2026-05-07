@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Query, HTTPException
+from fastapi import FastAPI, Form, Query, HTTPException, Request
 from typing import List
 import ast
 import re
@@ -17,34 +17,27 @@ async def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/recentdata")
-async def recent_data():
-    "Display"
-    pass
-
-
 @app.get("/data/by-date/")
-def data_by_date(date_str: str = Query(..., alias="date")):
-    script_path: str = f"{os.path.expanduser('~')}/analyse_data.sh"
+async def data_by_date(date_str: str = Query(..., alias="date")):
     try:
         final_date = date.fromisoformat(date_str)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date")
 
     result: subprocess.CompletedProcess = subprocess.run(
-        [script_path, str(final_date), f"{ALL_DATABASES[0]}2026"],
+        ["website/api/analyse_data.sh", str(final_date), f"{ALL_DATABASES[0]}2026"],
         capture_output=True,
         text=True,
     )
 
     result2: subprocess.CompletedProcess = subprocess.run(
-        [script_path, str(final_date), f"{ALL_DATABASES[1]}2026"],
+        ["website/api/analyse_data.sh", str(final_date), f"{ALL_DATABASES[1]}2026"],
         capture_output=True,
         text=True,
     )
 
     result3: subprocess.CompletedProcess = subprocess.run(
-        [script_path, str(final_date), f"{ALL_DATABASES[2]}2026"],
+        ["website/api/analyse_data.sh", str(final_date), f"{ALL_DATABASES[2]}2026"],
         capture_output=True,
         text=True,
     )
@@ -68,15 +61,7 @@ def data_by_date(date_str: str = Query(..., alias="date")):
 
 
 @app.post("/data/range/")
-async def data_range(
-    items: List[str] = Form(...),
-    databases: List[str] = Form(...),
-):
-    print("slaut")
-    data = {}
-    for i in items:
-        print(i)
-    for i in databases:
-        print(i)
-
-    return JSONResponse(data)
+async def data_range(request: Request):
+    payload = await request.json()
+    print(f"date: {payload['date']}")
+    print(f"sources: {payload['sources']}")
