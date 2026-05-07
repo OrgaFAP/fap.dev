@@ -12,15 +12,6 @@ ALL_DATABASES: list = ["Pornhub", "Xvideos", "Xhamster"]
 _ANSI_RE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
 
-def _parse_tags(stdout: str) -> dict:
-    clean = _ANSI_RE.sub("", stdout).strip()
-    try:
-        tags = ast.literal_eval(clean)
-        return tags if isinstance(tags, dict) else {}
-    except (ValueError, SyntaxError):
-        return {}
-
-
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
