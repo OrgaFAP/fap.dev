@@ -7,7 +7,7 @@ import subprocess
 from datetime import date
 
 
-app = FastAPI()
+app: FastAPI = FastAPI()
 ALL_DATABASES: list = ["Pornhub", "Xvideos", "Xhamster"]
 _ANSI_RE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
