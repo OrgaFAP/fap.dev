@@ -29,7 +29,6 @@ async def data_by_date(date_str: str = Query(..., alias="date")):
         capture_output=True,
         text=True,
     )
-
     result2: subprocess.CompletedProcess = subprocess.run(
         ["website/api/analyse_data.sh", str(final_date), f"{ALL_DATABASES[1]}2026"],
         capture_output=True,

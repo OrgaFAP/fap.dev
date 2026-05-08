@@ -7,4 +7,4 @@ DATABASE="$2"
 #test -n "$G5"
 #echo $?
 
-cd /home/wbruce/study_p/core/ && uv run src/analyse/check_data.py -c "$1" -d "$2"  -g5
+cd ~/core/ && unset VIRTUAL_ENV && uv run src/analyse/check_data.py -c "$1" -d "$2" -g5
