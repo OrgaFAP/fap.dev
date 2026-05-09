@@ -1,55 +1,78 @@
-from os import environ
-import mariadb
 from rich import print
-import warnings
-from scrap.globals import (
-    get_month,
-    get_yesterday,
-    convert_month,
-)
-import argparse
-import json
 from datetime import datetime
-import re
+from website.api.connect_db import Analyse_Database
+import mariadb
+
+ALL_DATABASES: tuple = ("Xvideos2026", "Xhamster2026", "Pornhub2026")
 
 
-class Query_API:
+class Query_API(Analyse_Database):
     "Handle all API Call"
 
-    def query_data_range(self, range_date: list[str]) -> str:
+    def __init__(self, data: dict) -> None:
+        super().__init__()
+        self.data: dict = data
+
+    def query_data_range(self) -> str:
         "Format the SQL Query"
 
-        print(range_date)
-
         query: str = f"""
-        SELECT * FROM january WHERE date >= '{range_date[0]}' AND date <= ''
-            UNION ALL SELECT * FROM february WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM march WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM april WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM may WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM june WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM july WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM august WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM september WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM october WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM november WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}'
-            UNION ALL SELECT * FROM december WHERE date >= '{range_date[0]}' AND date <= '{range_date[1]}';
+        SELECT * FROM january WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM february WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM march WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM april WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM may WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM june WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM july WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM august WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM september WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM october WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM november WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT * FROM december WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}';
         """
+        print(query)
 
         return query
 
-    def check_api_data_range(self, dates: list) -> list[str]:
-        "API /data/range"
+    def check_date(self):
+        "Check and convert to format DATETIME"
 
-        dates_data_range: list[str] = []
+        dates: list[str] = self.data["date"]
+        self.dates_data_range: list[str] = []
         try:
             for i in dates:
-                dates_data_range.append(
+                self.dates_data_range.append(
                     datetime.fromisoformat(i).strftime("%Y-%m-%d 00:00:00")
                 )  # type: ingore
 
-            return dates_data_range
-
+            print("[+] Dates OK")
+            return True
         except ValueError:
             print("Bad input")
-            exit(1)
+            return False
+
+    def check_date_database(self):
+        "Check if the Database is correct"
+        date_data_range: tuple = self.data["sources"]
+
+        for db in date_data_range:
+            if db in ALL_DATABASES:
+                ...
+            else:
+                print("bad")
+                return False
+        print("[+] Databases OK")
+        return True
+
+    def check_api_data_range(self) -> bool:
+        "API /data/range"
+
+        # Check INPUT user
+        if self.check_date_database() is True and self.check_date() is True:
+            query: str = self.query_data_range()
+            for db in self.data["sources"]:
+                context_db: mariadb.Connection = self._connect(db)
+                result: list[tuple] = self.execute_query(context_db, query)
+                print(result)
+
+        return True

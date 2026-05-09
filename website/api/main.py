@@ -5,7 +5,7 @@ import re
 import os
 import subprocess
 from datetime import date
-
+from website.api.data_api import Query_API
 
 app: FastAPI = FastAPI()
 ALL_DATABASES: list = ["Pornhub", "Xvideos", "Xhamster"]
@@ -63,3 +63,5 @@ async def data_by_date(date_str: str = Query(..., alias="date")):
 async def data_range(request: Request):
     payload: dict = await request.json()
     print(payload)
+    qa_api: Query_API = Query_API(payload)
+    qa_api.check_api_data_range()

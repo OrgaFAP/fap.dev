@@ -2,30 +2,28 @@ from os import environ
 import mariadb
 from rich import print
 import warnings
-from scrap.globals import (
-    get_month,
-    get_yesterday,
-    convert_month,
-)
 import argparse
 import json
 from datetime import datetime
 import re
-from data_api import Query_API
+from website.api.globals import (
+    get_month,
+    get_yesterday,
+    get_month_number,
+    convert_month,
+)
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 LIMIT_TAGS = 20
 
 
-class Analyse_Database(Query_API):
+class Analyse_Database:
     "Database object related"
 
     def __init__(self) -> None:
         "Init some variables"
         super().__init__()
-
         self.databases: tuple = ("Xvideos2026", "Xhamster2026", "Pornhub2026")
-        self.times: tuple = ("week", "yesterday", "today", "year", "month")
 
     def _connect(self, site: str):
         "Connect to the Mariadb server and Database"
