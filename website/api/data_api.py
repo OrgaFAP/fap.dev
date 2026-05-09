@@ -83,7 +83,7 @@ class Query_API(Analyse_Database):
         filename: str = f"{self.data['date'][0].replace('00:00:00', '')}-{self.data['date'][1].replace('00:00:00', '')}".strip().replace(
             " ", ""
         )
-        df = pd.DataFrame(
+        df: pd.DataFrame = pd.DataFrame(
             self.result_data_range, columns=["ID", "TITLE", "LINK", "DATE", "TAGS"]
         )
         print(df)
