@@ -2,6 +2,7 @@ from rich import print
 from datetime import datetime
 from website.api.connect_db import Analyse_Database
 import mariadb
+import pandas as pd
 
 ALL_DATABASES: tuple = ("Xvideos2026", "Xhamster2026", "Pornhub2026")
 
@@ -72,7 +73,24 @@ class Query_API(Analyse_Database):
             query: str = self.query_data_range()
             for db in self.data["sources"]:
                 context_db: mariadb.Connection = self._connect(db)
-                result: list[tuple] = self.execute_query(context_db, query)
-                print(result)
-
+                self.result_data_range: list[tuple] = self.execute_query(
+                    context_db, query
+                )
         return True
+
+    def export_csv(self) -> bool:
+        "Export STDOUT into a .CSV file"
+        filename: str = f"{self.data['date'][0].replace('00:00:00', '')}-{self.data['date'][1].replace('00:00:00', '')}".strip().replace(
+            " ", ""
+        )
+        df = pd.DataFrame(
+            self.result_data_range, columns=["ID", "TITLE", "LINK", "DATE", "TAGS"]
+        )
+        print(df)
+        df.to_csv(f"/tmp/fap_dev_{filename}.csv", index=False)
+
+        try:
+            return True
+        except Exception as e:
+            print("Error while export .CSV : ", e)
+            return False
