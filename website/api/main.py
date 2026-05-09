@@ -65,4 +65,4 @@ async def data_range(request: Request):
     print(payload)
     qa_api: Query_API = Query_API(payload)
     if qa_api.check_api_data_range() is True:
-        qa_api.export_csv()
+        filename: str = qa_api.export_csv()

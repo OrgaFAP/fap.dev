@@ -1,3 +1,4 @@
+from http.client import FAILED_DEPENDENCY
 from rich import print
 from datetime import datetime
 from website.api.connect_db import Analyse_Database
@@ -78,19 +79,21 @@ class Query_API(Analyse_Database):
                 )
         return True
 
-    def export_csv(self) -> bool:
+    def export_csv(self) -> str | bool:
         "Export STDOUT into a .CSV file"
-        filename: str = f"{self.data['date'][0].replace('00:00:00', '')}-{self.data['date'][1].replace('00:00:00', '')}".strip().replace(
-            " ", ""
-        )
-        df: pd.DataFrame = pd.DataFrame(
-            self.result_data_range, columns=["ID", "TITLE", "LINK", "DATE", "TAGS"]
-        )
-        print(df)
-        df.to_csv(f"/tmp/fap_dev_{filename}.csv", index=False)
 
         try:
-            return True
+            filename: str = f"/tmp/fap_dev_{self.data['date'][0].replace('00:00:00', '')}-{self.data['date'][1].replace('00:00:00', '')}".strip().replace(
+                " ", ""
+            )
+            filename = filename + ".csv"
+            df: pd.DataFrame = pd.DataFrame(
+                self.result_data_range, columns=["ID", "TITLE", "LINK", "DATE", "TAGS"]
+            )
+            print(df)
+            df.to_csv(filename, index=False)
+
+            return filename
         except Exception as e:
             print("Error while export .CSV : ", e)
             return False
