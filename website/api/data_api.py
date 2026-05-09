@@ -17,7 +17,8 @@ class Query_API:
     "Handle all API Call"
 
     def query_data_range(self, range_date: list[str]) -> str:
-        "API /data/range"
+        "Format the SQL Query"
+
         print(range_date)
 
         query: str = f"""

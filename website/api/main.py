@@ -61,6 +61,5 @@ async def data_by_date(date_str: str = Query(..., alias="date")):
 
 @app.post("/data/range/")
 async def data_range(request: Request):
-    payload = await request.json()
-    print(f"date: {payload['date']}")
-    print(f"sources: {payload['sources']}")
+    payload: dict = await request.json()
+    print(payload)
