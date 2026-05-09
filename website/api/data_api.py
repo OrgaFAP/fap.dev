@@ -74,6 +74,7 @@ class Query_API(Analyse_Database):
             query: str = self.query_data_range()
             for db in self.data["sources"]:
                 context_db: mariadb.Connection = self._connect(db)
+                self.result_data_range: list[tuple] = []
                 self.result_data_range: list[tuple] = self.execute_query(
                     context_db, query
                 )

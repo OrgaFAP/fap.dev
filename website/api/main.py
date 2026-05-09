@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Form, Query, HTTPException, Request
-from typing import List
+from fastapi import FastAPI, Query, HTTPException, Request
+from fastapi.responses import FileResponse
 import ast
 import re
 import os
@@ -65,4 +65,16 @@ async def data_range(request: Request):
     print(payload)
     qa_api: Query_API = Query_API(payload)
     if qa_api.check_api_data_range() is True:
-        filename: str = qa_api.export_csv()
+        filename: str = qa_api.export_csv()  # type: ignore
+        return {"filename": os.path.basename(filename) if filename else None}
+    raise HTTPException(status_code=400, detail="Invalid request")
+
+
+@app.get("/data/download/")
+async def download_csv(file: str = Query(...)) -> FileResponse:
+    if not re.match(r"^fap_dev_[\d\-]+\.csv$", file):
+        raise HTTPException(status_code=400, detail="Invalid file")
+    path = f"/tmp/{file}"
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail="File not found")
+    return FileResponse(path, media_type="text/csv", filename=file)

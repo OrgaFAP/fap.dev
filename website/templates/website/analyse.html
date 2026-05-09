@@ -178,10 +178,19 @@
                     </div>
 
                     <!-- Load button + status -->
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 flex-wrap">
                         <button onclick="loadRangeData()" class="px-6 py-2 bg-[var(--foreground)] text-[var(--background)] rounded font-semibold text-sm hover:opacity-80 transition-opacity">
                             Load Data
                         </button>
+                        <a id="rangeDownloadBtn" href="#" download
+                            class="hidden items-center gap-2 px-4 py-2 border border-[var(--separator)] rounded font-semibold text-sm font-mono hover:border-[var(--foreground)] transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download CSV
+                        </a>
                         <span id="rangeStatus" class="hidden text-sm opacity-70 font-mono"></span>
                     </div>
                 </div>
@@ -509,6 +518,10 @@
                 </div>`;
 
             const payload = { date: [start, end], sources };
+            const downloadBtn = document.getElementById('rangeDownloadBtn');
+            downloadBtn.classList.add('hidden');
+            downloadBtn.classList.remove('flex');
+
             fetch('/api/data/range/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
@@ -516,26 +529,22 @@
             })
                 .then(r => r.json())
                 .then(data => {
-                    const databases = data.databases || {};
-                    const dbNames   = Object.keys(databases);
-                    const panelId   = 'rangeDatePanel';
-
-                    const allEmpty = dbNames.every(n => Object.keys(databases[n]).length === 0);
-                    if (allEmpty) {
+                    if (data.filename) {
+                        downloadBtn.href = `/api/data/download/?file=${encodeURIComponent(data.filename)}`;
+                        downloadBtn.classList.remove('hidden');
+                        downloadBtn.classList.add('flex');
                         panel.innerHTML = `
                             <div class="border border-[var(--separator)] rounded-lg p-6">
-                                <p class="font-mono text-sm opacity-50 text-center py-8">No entries found for this range.</p>
+                                <p class="font-mono text-sm opacity-70 text-center py-8">
+                                    Export ready — <span class="opacity-50">${data.filename}</span>
+                                </p>
                             </div>`;
                         return;
                     }
-
-                    const sections = dbNames.map(n => buildSection(n, databases[n], panelId, 'No entries found for this range.'));
                     panel.innerHTML = `
-                        <div class="mb-4">
-                            <h3 class="text-lg font-semibold font-mono mb-6">${start} → ${end}</h3>
-                            <div class="space-y-6">${sections.map(s => s.html).join('')}</div>
+                        <div class="border border-[var(--separator)] rounded-lg p-6">
+                            <p class="font-mono text-sm opacity-50 text-center py-8">No entries found for this range.</p>
                         </div>`;
-                    sections.forEach(s => { if (s.stateKey) renderSectionPage(s.stateKey, 0); });
                 })
                 .catch(() => {
                     panel.innerHTML = `
