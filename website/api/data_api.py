@@ -69,16 +69,15 @@ class Query_API(Analyse_Database):
     def check_api_data_range(self) -> bool:
         "API /data/range"
 
+        self.result_data_range: list[tuple] = []
         # Check INPUT user
         if self.check_date_database() is True and self.check_date() is True:
             query: str = self.query_data_range()
             for db in self.data["sources"]:
                 context_db: mariadb.Connection = self._connect(db)
-                self.result_data_range: list[tuple] = []
-                self.result_data_range: list[tuple] = self.execute_query(
-                    context_db, query
-                )
-                print(self.result_data_range)
+                data: list[tuple] = self.execute_query(context_db, query)
+                for i in data:
+                    self.result_data_range.append(i)
         return True
 
     def export_csv(self) -> str | bool:
