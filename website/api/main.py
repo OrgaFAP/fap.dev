@@ -72,9 +72,12 @@ async def data_range(request: Request):
 
 @app.get("/data/download/")
 async def download_csv(file: str = Query(...)) -> FileResponse:
+    "..."
+
     if not re.match(r"^fap_dev_[\d\-]+\.csv$", file):
         raise HTTPException(status_code=400, detail="Invalid file")
     path = f"/tmp/{file}"
     if not os.path.isfile(path):
         raise HTTPException(status_code=404, detail="File not found")
+
     return FileResponse(path, media_type="text/csv", filename=file)
