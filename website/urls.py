@@ -8,4 +8,5 @@ urlpatterns = [
     path("ressource/", views.ressource, name="ressource"),
     path("thoughts/", views.thoughts, name="thoughts"),
     path("explore/", views.why, name="why"),
+    path("how-data/", views.how_data, name="how_data"),
 ]

@@ -31,3 +31,7 @@ def thoughts(request):
 
 def why(request):
     return render(request, "website/why.html")
+
+
+def how_data(request):
+    return render(request, "website/how_data.html")
