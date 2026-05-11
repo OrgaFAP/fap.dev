@@ -19,18 +19,18 @@ class Query_API(Analyse_Database):
         "Format the SQL Query"
 
         query: str = f"""
-        SELECT title,link,date,tags FROM january WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM february WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM march WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM april WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM may WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM june WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM july WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM august WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM september WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM october WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM november WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
-            UNION ALL SELECT title,link,date,tags FROM december WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}';
+        SELECT id,title,link,date,tags FROM january WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM february WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM march WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM april WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM may WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM june WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM july WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM august WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM september WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM october WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM november WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}'
+            UNION ALL SELECT id,title,link,date,tags FROM december WHERE date >= '{self.data["date"][0]}' AND date <= '{self.data["date"][1]}';
         """
         print(query)
 
@@ -89,7 +89,7 @@ class Query_API(Analyse_Database):
             )
             filename = filename + ".csv"
             df: pd.DataFrame = pd.DataFrame(
-                self.result_data_range, columns=["TITLE", "LINK", "DATE", "TAGS"]
+                self.result_data_range, columns=["ID", "TITLE", "LINK", "DATE", "TAGS"]
             )
             print(df)
             df.to_csv(filename, index=True)
