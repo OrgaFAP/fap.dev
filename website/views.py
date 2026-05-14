@@ -15,10 +15,10 @@ def donate(request):
     return render(request, "website/donate.html")
 
 
-def analyse(request):
+def analysis(request):
     today = date.today()
     days = [today - timedelta(days=i) for i in range(5)]
-    return render(request, "website/analyse.html", {"days": days})
+    return render(request, "website/analysis.html", {"days": days})
 
 
 def ressource(request):
