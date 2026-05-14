@@ -1,1 +1,1 @@
-fap/website/templates/website/*.html linguist-documentation
+*.html linguist-detectable=false
