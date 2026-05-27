@@ -61,12 +61,16 @@ async def data_by_date(date_str: str = Query(..., alias="date")):
 
 @app.post("/data/range/")
 async def data_range(request: Request):
+    "..."
+
     payload: dict = await request.json()
     print(payload)
     qa_api: Query_API = Query_API(payload)
+
     if qa_api.check_api_data_range() is True:
         filename: str = qa_api.export_csv()  # type: ignore
         return {"filename": os.path.basename(filename) if filename else None}
+
     raise HTTPException(status_code=400, detail="Invalid request")
 
 
