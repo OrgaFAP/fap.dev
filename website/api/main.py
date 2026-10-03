@@ -19,6 +19,8 @@ async def read_root():
 
 @app.get("/data/by-date/")
 async def data_by_date(date_str: str = Query(..., alias="date")):
+    "Use for 5 days range data"
+
     try:
         final_date = date.fromisoformat(date_str)
     except ValueError:
@@ -46,7 +48,7 @@ async def data_by_date(date_str: str = Query(..., alias="date")):
         try:
             tags = ast.literal_eval(clean)
             return tags if isinstance(tags, dict) else {}
-        except (ValueError, SyntaxError):
+        except ValueError, SyntaxError:
             return {}
 
     print(parse_tags(result.stdout))
